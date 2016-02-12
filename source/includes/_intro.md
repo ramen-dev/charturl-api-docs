@@ -38,7 +38,7 @@ Templates inherit the **Config JS Object** and **Custom CSS** of their parent pr
 
 ### Image Formats
 
-Images are returned in `PNG` format.
+Images are returned as `PNG` files.
 
 ### iFrame Support
 
