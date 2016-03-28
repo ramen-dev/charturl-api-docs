@@ -22,7 +22,3 @@ find us on [Twitter](https://twitter.com/charturl) if you have any questions__
 
 <!-- see chartulr-api-docs/source/includes/*.md for content -->
 
-<script>
-  window.ramenSettings = { organization_id: '5639b6517765624ed7dfa103', user: {cross_domain: true} };
-</script>
-<script src="http://cdn.ramen.dev/assets/ramen.js" async></script>
