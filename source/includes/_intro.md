@@ -1,55 +1,60 @@
-## C3.js
+# Introduction
 
-Our charts are drawn by C3.js. C3 was chosen because it is well-maintained, and doesn't use any fancy CSS3 that throws our screenshot software into disarray. The construction of its options argument is very straightforward, and their documentation, while not perfect, is among some of the best for free JS charting libraries.
+> Ruby assumes at least version 2.1. JavaScript is mostly targeted at NodeJS examples.
 
-[Read the C3.js documentation here](http://c3js.org/).
+ChartURL is a tool that allows you to turn your data into beautiful image charts for emails,
+reports, chat bots, & web/mobile apps. We support several charting libraries. We
+fully expose the API for all the charting libraries we support, so anything you can do with
+those Charts on the web can be done with ChartURL.
 
-## DataMap
+### Libraries
 
-We recently released support for [DataMaps](http://datamaps.github.io/). See our examples page for an example of a Chloropleth chart and how to use this library yourself.
+- [ChartsJS](https://chartjs.org)
+- [Datamaps](http://datamaps.github.io)
+- [C3.js](https://c3js.org)
 
+# Who are these docs for?
 
-## Templates & Confguration
+This is the documentation for the ChartURL Developer API. If you are looking for help with the
+ChartURL for Marketers product, please [contact support](mailto:support@charturl.com).
 
-### Project-level configuration
+Don’t know what product to use? If your desired use case is that you want to upload a data file to
+ChartURL and get back a file that includes links to images, then you want to use the Marketer product.
 
-When you create a Project, you have the option to supply **Config JS Object** and **Custom CSS**. Our Config **JS Object** is structured as follows:
+# Use Cases
 
-```json
-{
-  "charturl": {
-    "_comment": "ChartURL-specific options.",
-    "pixel_ratio": 1  // Can be set to 2 for retina
-    "type": null      // Can be set to "datamap" for DataMaps: http://datamaps.github.io
-  },
+### Email
 
-  "options": {
-    "_comment": "This becomes the `options` object passed to C3 or DataMaps"
-  }
-}
-```
+Embedding charts in emails is the most common use case for using ChartURL.
+There is no reliable way to have consistent looking charts in email without
+rendering them as an image.
 
-### Template-level configuration
+### Chat bots
 
-Templates inherit the **Config JS Object** and **Custom CSS** of their parent projects. They, in turn, have their own **Template Config JS Object** and **Template Custom CSS** that can augment and override the Project-level configuration. They follow the same rules as Project-level configuration.
+JavaScript charting libraries don’t run in chat systems like Slack and Hipchat,
+but they render images, and that’s all that is needed for ChartURL to work.
+Companies like [Statsbot](http://statsbot.co/) power their Slackbot chat charts
+with ChartURL.
 
+### PDF
 
-## Image Details
+Some charting libraries do not render correctly in PDFs, so some of our
+customers use ChartURL to render charts into custom PDF reports they create for
+their customers.
 
-### Image Formats
+<aside class="warning">
+**Note:** When rendering images for PDF, make sure to use our Retina Support
+feature, as some of our customers have discovered the 2x pixel ratio is
+required to make the images look awesome in their PDFs.
+</aside>
 
-Images are returned as `PNG` files.
+### Mobile & Web
 
-### iFrame Support
+Many people want to have charts that look consistent in their companies emails,
+their website or their mobile app. ChartURL is an easy way to ensure that
+consistency. You can choose to render the chart image or if you append .html on
+the end of a URL, you’ll get back a webpage you can then put in an iframe.
 
-This has had very little testing, but we wanted to see what you would do with it. If you append `.html` on the end of a URL, you'll get back a webpage. You can put this in an iframe and use it how you see fit.
-
-### Image Sizes
-
-Image heights and widths should not be less than 40px. The max height and width is 1200px.
-
-### Retina Image Support
-
-We now support modifying the pixel ratio by setting the `charturl.pixel_ratio` in your Config JS Object.
-
-For ease of use in stylesheets and the srcset attribute, you can also append `retina=1` onto any URL and it will have the same effect as setting the `charturl.pixel_ratio` option.
+This is especially handy for mobile app developers who don’t want to build out
+a custom charting solution for their application. We also have retina support
+for mobile.

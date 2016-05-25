@@ -1,24 +1,19 @@
 ---
 title: ChartURL Developer Documentation
 
+language_tabs:
+  - ruby
+  - javascript
+  - php
+
 includes:
   - intro
-  - short_urls
-  - signed_urls
-  - (decrypted)_encrypted_urls
-  - bulk_api
-  - credits
+  - setup
+  - making_requests
+  - more_info
+  - reference
 
 search: true
 ---
 
-# Introduction
-Welcome to the ChartURL Developer Documentation.
-
-<aside class="warning">
-__These docs are a work in progress. Please email [support](mailto:support@charturl.com) or
-find us on [Twitter](https://twitter.com/charturl) if you have any questions__
-</aside>
-
-<!-- see chartulr-api-docs/source/includes/*.md for content -->
 
