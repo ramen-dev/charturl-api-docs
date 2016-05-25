@@ -12,8 +12,7 @@ includes:
   - making_requests
   - more_info
   - reference
+  - bulk
 
 search: true
 ---
-
-

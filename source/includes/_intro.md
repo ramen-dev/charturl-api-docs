@@ -9,9 +9,9 @@ those Charts on the web can be done with ChartURL.
 
 ### Libraries
 
-- [ChartsJS](https://chartjs.org)
+- [ChartsJS](http://chartjs.org)
 - [Datamaps](http://datamaps.github.io)
-- [C3.js](https://c3js.org)
+- [C3.js](http://c3js.org)
 
 # Who are these docs for?
 
@@ -32,7 +32,7 @@ rendering them as an image.
 ### Chat bots
 
 JavaScript charting libraries don’t run in chat systems like Slack and Hipchat,
-but they render images, and that’s all that is needed for ChartURL to work.
+but those products do let you embed images, and that's all that is needed for ChartURL to work.
 Companies like [Statsbot](http://statsbot.co/) power their Slackbot chat charts
 with ChartURL.
 
@@ -50,11 +50,9 @@ required to make the images look awesome in their PDFs.
 
 ### Mobile & Web
 
-Many people want to have charts that look consistent in their companies emails,
-their website or their mobile app. ChartURL is an easy way to ensure that
-consistency. You can choose to render the chart image or if you append .html on
-the end of a URL, you’ll get back a webpage you can then put in an iframe.
+Many people want to have charts that look consistent in their company  emails,
+their website, and their mobile apps. ChartURL is an easy way to ensure that
+consistency. 
 
 This is especially handy for mobile app developers who don’t want to build out
-a custom charting solution for their application. We also have retina support
-for mobile.
+a custom charting solution for their application.

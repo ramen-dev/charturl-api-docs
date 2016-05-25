@@ -144,7 +144,7 @@ We are currently running version 0.4.10. You can find the documentation for C3js
 
 <aside class="warning">
 The C3js documentation is not very robust. It also is largely missing all material relating to how to
-style charts. For this reason, we <strong>strongly</strongly> recomment using ChartJS.
+style charts. For this reason, we <strong>strongly</strong> recommend using ChartJS.
 </aside>
 
 ## 4. Understanding how to setup your request-level data
@@ -157,8 +157,8 @@ in other options that override the higher level options.
 
 ### Config JS
 
-The `charturl` and `options` objects get merged together with the project- and
-template-level counterparts. Request-level takes precedence over
+The `charturl` and `options` objects get merged together with the Project- and
+Template-level counterparts. Request-level takes precedence over
 Template-level, which in turn takes precedence over Project-level.
 
 ### Custom CSS
@@ -169,16 +169,20 @@ The CSS is rendered into the page in the following order:
 - Template-level
 - Request-level
 
-### Custom JS [Special pricing tier]
-
-The Custom JS feature is only available at higher pricing tiers. Contact
-support if you would like to have this feature enabled.
+### Custom JS [Only available at higher pricing tiers]
 
 The JS is first wrapped in an `onready` callback similar to jQuery’s
-`$(function() { … })` and then the custom JS blocks are rendered in the
+`$(function() { /* ... */ })` and then the custom JS blocks are rendered in the
 following order:
 
 - Project-level
 - Template-level
 - Request-level
+
+This feature is required in order to do things like create
+Bubbles in DataMaps.
+
+The Custom JS feature is only available at higher pricing tiers. Contact
+support if you would like to have this feature enabled.
+
 

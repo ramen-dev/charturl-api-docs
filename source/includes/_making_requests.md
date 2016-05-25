@@ -1,7 +1,7 @@
 # Making Requests
 
-We support 2 different methods for sending us your data to generate the URL for
-your chart image. Read below about ShortURLs and Signed URLs to choose the
+We support 2 different methods for generating image URLs.
+Read below about ShortURLs and Signed URLs to choose the
 method that is right for you. In both cases you will need to pass in the
 correct template-slug so be sure to have that ready.
 
