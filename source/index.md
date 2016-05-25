@@ -13,6 +13,7 @@ includes:
   - more_info
   - reference
   - bulk
+  - improve
 
 search: true
 ---
