@@ -225,7 +225,6 @@ url = "https://charturl.com/#{token}/#{slug}?d=#{CGI.escape(json)}&s=#{CGI.escap
 ```
 
 ```javascript
-window.KILL.ME
 ```
 
 This endpoint requires two parameters, the JSON data being passed in, and a Signature to ensure authenticity.
