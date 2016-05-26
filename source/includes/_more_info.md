@@ -50,10 +50,24 @@ plan.
 
 ### Custom Watermark Branding
 
-```css body:before { content: " "; display: block; position: absolute; right:
-0; bottom: 0; height: 20%; width: 40%; z-index: -1; opacity: 0.2; background:
-url(/* DATA URI */); background-size: contain; background-position: bottom
-right; max-height: 40px; max-width: 120px; } ```
+```css
+body:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 20%; 
+  width: 40%;
+  z-index: -1;
+  opacity: 0.2;
+  background: url(/* DATA URI */);
+  background-size: contain;
+  background-position: bottom right;
+  max-height: 40px;
+  max-width: 120px;
+}
+```
 
 We support custom watermark branding using CSS and an image data URI. See the
 example CSS on the right. We recommend setting `max-width` and `max-height` to

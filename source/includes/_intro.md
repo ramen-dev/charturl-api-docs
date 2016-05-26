@@ -2,7 +2,7 @@
 
 > Ruby assumes at least version 2.1. JavaScript is mostly targeted at NodeJS examples.
 
-ChartURL is a tool that allows you to turn your data into beautiful image charts for emails,
+ChartURL is a product that enables you to turn your data into image charts for emails,
 reports, chat bots, & web/mobile apps. We support several charting libraries. We
 fully expose the API for all the charting libraries we support, so anything you can do with
 those Charts on the web can be done with ChartURL.
@@ -36,13 +36,15 @@ but those products do let you embed images, and that's all that is needed for Ch
 Companies like [Statsbot](http://statsbot.co/) power their Slackbot chat charts
 with ChartURL.
 
+![Statsbot](https://dl.dropboxusercontent.com/spa/c8k9520tqhih2dg/giljeau3.png)
+
 ### PDF
 
 Some charting libraries do not render correctly in PDFs, so some of our
 customers use ChartURL to render charts into custom PDF reports they create for
 their customers.
 
-<aside class="warning">
+<aside class="notice">
 **Note:** When rendering images for PDF, make sure to use our Retina Support
 feature, as some of our customers have discovered the 2x pixel ratio is
 required to make the images look awesome in their PDFs.

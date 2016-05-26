@@ -247,3 +247,10 @@ Key | Required |Value
 ### Response
 
 The response will be an image of the desired format.
+
+## Rate Limits
+
+Your account is limited to 100 requests per minute.
+[Contact support](mailto:support@charturl.com) to increase your
+rate limit.
+

@@ -10,7 +10,8 @@ you can add others as needed. Each project has it’s own `token` (for use in cr
 Signed URLs) and it's own `api_key` (for use in creating ShortURLs).
 
 Projects have Project-level settings you can use to maintain consistency. This
-can be used to set typography, custom watermarks, and color palettes across
+can be used to set things like typography, custom watermarks,
+and color palettes across
 all templates in the project.
 
 ## 2. Create a template
@@ -25,7 +26,7 @@ Give your template a name, and you can start to edit the settings.
 ### Template Level Configurations
 
 In a template you can add all the code to define how your chart will look. You
-will need to create a new template for each unique chart you want to create. 
+will need to create a new template for each different chart you want to create. 
 
 ![Config options](https://www.evernote.com/l/AgX_PwqrupBH6ZdaUxUQbABqYfO-Oh2W3HkB/image.png)
 
@@ -33,7 +34,7 @@ will need to create a new template for each unique chart you want to create.
 
 The Config JavaScript object is structured as follows:
 
-Attribute | Type | Meaning
+Attribute | Type | Description
 ---|---|---
 charturl|Object|ChartURL options
 options|Object|The object passed to the charting library
@@ -81,20 +82,19 @@ templates](https://charturl.com/app/examples).
 
 ### Preview the chart
 
-We provide a simple preview so you can see how your chart will look. Clicking
+We provide a preview so you can see how your chart will look. Clicking
 ‘Save and Refresh All’ will update this preview. For troubleshooting, you can
-also open the HTML version of the chart incase you need to troubleshoot the
+also open the HTML version of the chart in case you need to troubleshoot the
 code.
 
 ### Project Level Configurations
 
 When editing a template you will also be able to edit Project-level
-configurations for ‘JS Object’ and ‘Custom CSS’. Keep in mind this will be
+configurations for 'JS Object' and 'Custom CSS'. Keep in mind this will be
 applied to ALL of your templates in a project. There is no other place to edit
 Project-level settings.
 
-Not sure where to start? [Try one of our
-examples](https://charturl.com/app/examples).
+Not sure where to start? [Try one of our examples](https://charturl.com/app/examples).
 
 ## 3. Choosing a charting library
 
@@ -104,7 +104,8 @@ that library, and link to their documentation.
 
 ### ChartJS 2.0
 
-We are currently running version 2.0.0. You can find
+This is our recommended library for basic charts. We are currently running
+version 2.0.0. You can find
 the documentation for ChartJS here: [ChartJS 2.0 Documentation](https://chartjs.org)
 
 To use ChartJS, set `charturl.type` to `chartjs`.
@@ -130,8 +131,9 @@ We are currently running DataMaps version 0.4.0, which you can find here:
 
 To use DataMaps, set `charturl.type` to `datamaps`
 
-<aside class="warning">
-<code>charturl.type</code> also supports being set to <code>datamap</code without the <code>s</code>
+<aside class="notice">
+<code>charturl.type</code> also supports being set to <code>datamap</code>
+without the <code>s</code>
 because we typo'd it in some old documentation :)
 </aside>
 
