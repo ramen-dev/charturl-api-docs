@@ -13,6 +13,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <script src="javascripts/all.js" type="text/javascript"></script>
 
+      <script>
+        $(function() {
+          setupLanguages(["ruby","javascript","php"]);
+        });
+      </script>
 
     <style type="text/css">
       /* Ramen customizations */
@@ -32,6 +37,11 @@
     </a>
     <div class="tocify-wrapper">
       <img src="images/charturl_white.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="php">php</a>
+        </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
@@ -42,375 +52,742 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the ChartURL Developer Documentation.</p>
+        
+          <h1 id='introduction'>Introduction</h1>
+<blockquote>
+<p>Ruby assumes at least version 2.1. JavaScript is mostly targeted at NodeJS examples.</p>
+</blockquote>
 
-<p><aside class="warning">
-<strong>These docs are a work in progress. Please email <a href="mailto:support@charturl.com">support</a> or
-find us on <a href="https://twitter.com/charturl">Twitter</a> if you have any questions</strong>
+<p>ChartURL is a product that enables you to turn your data into image charts for emails,
+reports, chat bots, &amp; web/mobile apps. We support several charting libraries. We
+fully expose the API for all the charting libraries we support, so anything you can do with
+those Charts on the web can be done with ChartURL.</p>
+<h3 id='libraries'>Libraries</h3>
+<ul>
+<li><a href="http://chartjs.org">ChartsJS</a></li>
+<li><a href="http://datamaps.github.io">Datamaps</a></li>
+<li><a href="http://c3js.org">C3.js</a></li>
+</ul>
+<h1 id='who-are-these-docs-for'>Who are these docs for?</h1>
+<p>This is the documentation for the ChartURL Developer API. If you are looking for help with the
+ChartURL for Marketers product, please <a href="mailto:support@charturl.com">contact support</a>.</p>
+
+<p>Don’t know what product to use? If your desired use case is that you want to upload a data file to
+ChartURL and get back a file that includes links to images, then you want to use the Marketer product.</p>
+<h1 id='use-cases'>Use Cases</h1><h3 id='email'>Email</h3>
+<p>Embedding charts in emails is the most common use case for using ChartURL.
+There is no reliable way to have consistent looking charts in email without
+rendering them as an image.</p>
+<h3 id='chat-bots'>Chat bots</h3>
+<p>JavaScript charting libraries don’t run in chat systems like Slack and Hipchat,
+but those products do let you embed images, and that&rsquo;s all that is needed for ChartURL to work.
+Companies like <a href="http://statsbot.co/">Statsbot</a> power their Slackbot chat charts
+with ChartURL.</p>
+
+<p><img alt="Statsbot" src="https://dl.dropboxusercontent.com/spa/c8k9520tqhih2dg/giljeau3.png" /></p>
+<h3 id='pdf'>PDF</h3>
+<p>Some charting libraries do not render correctly in PDFs, so some of our
+customers use ChartURL to render charts into custom PDF reports they create for
+their customers.</p>
+
+<p><aside class="notice">
+<strong>Note:</strong> When rendering images for PDF, make sure to use our Retina Support
+feature, as some of our customers have discovered the 2x pixel ratio is
+required to make the images look awesome in their PDFs.
 </aside></p>
+<h3 id='mobile-amp-web'>Mobile &amp; Web</h3>
+<p>Many people want to have charts that look consistent in their company  emails,
+their website, and their mobile apps. ChartURL is an easy way to ensure that
+consistency. </p>
 
-<!-- see chartulr-api-docs/source/includes/*.md for content -->
+<p>This is especially handy for mobile app developers who don’t want to build out
+a custom charting solution for their application.</p>
 
-          <h2 id='c3-js'>C3.js</h2>
-<p>Our charts are drawn by C3.js. C3 was chosen because it is well-maintained, and doesn&rsquo;t use any fancy CSS3 that throws our screenshot software into disarray. The construction of its options argument is very straightforward, and their documentation, while not perfect, is among some of the best for free JS charting libraries.</p>
+          <h1 id='setup-guide'>Setup Guide</h1>
+<p>This guide will walk you through getting started with ChartURL.</p>
+<h2 id='1--create-a-project'>1. Create a project</h2>
+<p>Projects are where you keep all your chart templates and set up your production
+and development testing environments. We create your first project for you, and
+you can add others as needed. Each project has it’s own <code class="prettyprint">token</code> (for use in creating
+Signed URLs) and it&rsquo;s own <code class="prettyprint">api_key</code> (for use in creating ShortURLs).</p>
 
-<p><a href="http://c3js.org/">Read the C3.js documentation here</a>.</p>
-<h2 id='datamap'>DataMap</h2>
-<p>We recently released support for <a href="http://datamaps.github.io/">DataMaps</a>. See our examples page for an example of a Chloropleth chart and how to use this library yourself.</p>
-<h2 id='templates-amp-confguration'>Templates &amp; Confguration</h2><h3 id='project-level-configuration'>Project-level configuration</h3>
-<p>When you create a Project, you have the option to supply <strong>Config JS Object</strong> and <strong>Custom CSS</strong>. Our Config <strong>JS Object</strong> is structured as follows:</p>
+<p>Projects have Project-level settings you can use to maintain consistency. This
+can be used to set things like typography, custom watermarks,
+and color palettes across
+all templates in the project.</p>
+<h2 id='2--create-a-template'>2. Create a template</h2>
+<p>Create your first template by heading into a project and clicking ‘Create
+Template’</p>
+
+<p><img alt="Create a template" src="https://www.evernote.com/l/AgUPiXIVTaZGNovv0TNQutpkZcE3PkXbaWUB/image.png" /></p>
+
+<p>Give your template a name, and you can start to edit the settings.</p>
+<h3 id='template-level-configurations'>Template Level Configurations</h3>
+<p>In a template you can add all the code to define how your chart will look. You
+will need to create a new template for each different chart you want to create. </p>
+
+<p><img alt="Config options" src="https://www.evernote.com/l/AgX_PwqrupBH6ZdaUxUQbABqYfO-Oh2W3HkB/image.png" /></p>
+<h3 id='config-javascript-object'>Config JavaScript Object</h3>
+<p>The Config JavaScript object is structured as follows:</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>charturl</td>
+<td>Object</td>
+<td>ChartURL options</td>
+</tr>
+<tr>
+<td>options</td>
+<td>Object</td>
+<td>The object passed to the charting library</td>
+</tr>
+</tbody></table>
+
+<p>The Config JS object is JavaScript, which means you can include closures:</p>
+
+<p><code class="prettyprint">function(v) { return Math.round(v) }</code></p>
+<h3 id='custom-css'>Custom CSS</h3>
+<blockquote>
+<p>By default, the <code class="prettyprint">body</code> is transparent. If sending images to a printer,  change it to white.</p>
+</blockquote>
+<pre class="highlight css"><span class="nt">body</span> <span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+<p>Use this CSS to style your chart. C3js relies heavily on CSS for styling, while
+ChartJS uses options passed into its constructor to style the chart.</p>
+<h3 id='template-data-for-preview'>Template Data for Preview</h3>
+<blockquote>
+<p>Example JSON for Preview</p>
+</blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"charturl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"_comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChartURL-specific options."</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"pixel_ratio"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Can</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">retina</span><span class="w">
-    </span><span class="s2">"type"</span><span class="err">:</span><span class="w"> </span><span class="err">null</span><span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="err">Can</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="s2">"datamap"</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">DataMaps:</span><span class="w"> </span><span class="err">http://datamaps.github.io</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
+  </span><span class="s2">"charturl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">},</span><span class="w">
   </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"_comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This becomes the `options` object passed to C3 or DataMaps"</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">"Series 1"</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"Series 2"</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
-<h3 id='template-level-configuration'>Template-level configuration</h3>
-<p>Templates inherit the <strong>Config JS Object</strong> and <strong>Custom CSS</strong> of their parent projects. They, in turn, have their own <strong>Template Config JS Object</strong> and <strong>Template Custom CSS</strong> that can augment and override the Project-level configuration. They follow the same rules as Project-level configuration.</p>
-<h2 id='image-details'>Image Details</h2><h3 id='image-formats'>Image Formats</h3>
-<p>Images are returned as <code class="prettyprint">PNG</code> files.</p>
-<h3 id='iframe-support'>iFrame Support</h3>
-<p>This has had very little testing, but we wanted to see what you would do with it. If you append <code class="prettyprint">.html</code> on the end of a URL, you&rsquo;ll get back a webpage. You can put this in an iframe and use it how you see fit.</p>
+
+<p>The Preview Data is structured exactly like the Config JS object with one very
+big difference. The Preview Data is JSON, not JavaScript. This means object
+keys need to be wrapped in double quotes, and closures are not allowed.</p>
+
+<p>This is where you can add example json data to test our your chart. We’ll save
+that test data for you to use in the future. If you want to see how some
+example test data looks <a href="https://charturl.com/app/examples">check out one of our example
+templates</a>.</p>
+<h3 id='preview-the-chart'>Preview the chart</h3>
+<p>We provide a preview so you can see how your chart will look. Clicking
+‘Save and Refresh All’ will update this preview. For troubleshooting, you can
+also open the HTML version of the chart in case you need to troubleshoot the
+code.</p>
+<h3 id='project-level-configurations'>Project Level Configurations</h3>
+<p>When editing a template you will also be able to edit Project-level
+configurations for &lsquo;JS Object&rsquo; and &lsquo;Custom CSS&rsquo;. Keep in mind this will be
+applied to ALL of your templates in a project. There is no other place to edit
+Project-level settings.</p>
+
+<p>Not sure where to start? <a href="https://charturl.com/app/examples">Try one of our examples</a>.</p>
+<h2 id='3--choosing-a-charting-library'>3. Choosing a charting library</h2>
+<p>To choose a charting library, you&rsquo;ll want to set the <code class="prettyprint">charturl.type</code> option to the
+appropriate value. Below we list out our charting libraries, show you how to choose
+that library, and link to their documentation.</p>
+<h3 id='chartjs-2-0'>ChartJS 2.0</h3>
+<p>This is our recommended library for basic charts. We are currently running
+version 2.0.0. You can find
+the documentation for ChartJS here: <a href="https://chartjs.org">ChartJS 2.0 Documentation</a></p>
+
+<p>To use ChartJS, set <code class="prettyprint">charturl.type</code> to <code class="prettyprint">chartjs</code>.</p>
+<h3 id='datamaps'>DataMaps</h3>
+<p>DataMaps lets you create charts that look like this:</p>
+
+<p><img alt="Bubbles" src="https://dl.dropboxusercontent.com/spa/c8k9520tqhih2dg/y-a67_4d.png" /></p>
+
+<p>And this:</p>
+
+<p><img alt="Projections" src="https://dl.dropboxusercontent.com/spa/c8k9520tqhih2dg/4hwi9i1t.png" /></p>
+
+<p>And this: </p>
+
+<p><img alt="Africa" src="https://dl.dropboxusercontent.com/spa/c8k9520tqhih2dg/fs3bpnnv.png" /></p>
+
+<p>It is, in a word, <strong>awesome</strong>.</p>
+
+<p>We are currently running DataMaps version 0.4.0, which you can find here:
+<a href="http://datamaps.github.io">DataMaps Documentation</a></p>
+
+<p>To use DataMaps, set <code class="prettyprint">charturl.type</code> to <code class="prettyprint">datamaps</code></p>
+
+<p><aside class="notice">
+<code>charturl.type</code> also supports being set to <code>datamap</code>
+without the <code>s</code>
+because we typo&rsquo;d it in some old documentation :)
+</aside></p>
+<h3 id='c3-js'>C3.js</h3>
+<p>C3.js was the original library supported. To use it, you can leave <code class="prettyprint">charturl.type</code> blank or set it to <code class="prettyprint">c3js</code>.</p>
+
+<p>We are currently running version 0.4.10. You can find the documentation for C3js here:
+<a href="http://c3js.org">C3js Documentation</a></p>
+
+<p><aside class="warning">
+The C3js documentation is not very robust. It also is largely missing all material relating to how to
+style charts. For this reason, we <strong>strongly</strong> recommend using ChartJS.
+</aside></p>
+<h2 id='4--understanding-how-to-setup-your-request-level-data'>4. Understanding how to setup your request-level data</h2>
+<p>We’ve already covered Project-level configuration (for things like typography,
+colors, or custom watermarking) and Template-level configuration (for things
+like chart type &amp; chart options). A request to generate a chart will send in
+additional information like the data you want to chart, but you can also pass
+in other options that override the higher level options. </p>
+<h3 id='config-js'>Config JS</h3>
+<p>The <code class="prettyprint">charturl</code> and <code class="prettyprint">options</code> objects get merged together with the Project- and
+Template-level counterparts. Request-level takes precedence over
+Template-level, which in turn takes precedence over Project-level.</p>
+<h3 id='custom-css'>Custom CSS</h3>
+<p>The CSS is rendered into the page in the following order:</p>
+
+<ul>
+<li>Project-level</li>
+<li>Template-level</li>
+<li>Request-level</li>
+</ul>
+<h3 id='custom-js-only-available-at-higher-pricing-tiers'>Custom JS [Only available at higher pricing tiers]</h3>
+<p>The JS is first wrapped in an <code class="prettyprint">onready</code> callback similar to jQuery’s
+<code class="prettyprint">$(function() { /* ... */ })</code> and then the custom JS blocks are rendered in the
+following order:</p>
+
+<ul>
+<li>Project-level</li>
+<li>Template-level</li>
+<li>Request-level</li>
+</ul>
+
+<p>This feature is required in order to do things like create
+Bubbles in DataMaps.</p>
+
+<p>The Custom JS feature is only available at higher pricing tiers. Contact
+support if you would like to have this feature enabled.</p>
+
+          <h1 id='creating-chart-urls'>Creating Chart URLs</h1>
+<p>We support 2 different methods for generating image URLs.
+Read below about ShortURLs and Signed URLs to choose the
+method that is right for you.</p>
+
+<p>Constructing a URL is <em>free</em> and <em>fast</em>. Since you don&rsquo;t get charged until
+an image is viewed, you can create as many of these as you want.</p>
+<h2 id='preferred-method-shorturls'>Preferred Method: ShortURLs</h2>
+<p>ShortURLs are preferred since they completely remove the chances of running up
+against the ~1,500 character limit on GET strings.</p>
+
+<p>This method lets you POST us as much data as you want and get back a short
+URL like this: <code class="prettyprint">https://charturl.com/r/nXN2</code></p>
+<h3 id='the-shorturl-endpoint-is-designed-to-be-fast'>The ShortURL endpoint is designed to be fast</h3>
+<p>Since we don’t render the image until the resulting ShortURL is used within an
+<code class="prettyprint">img</code> tag, this endpoint is very speedy. If you see response times over
+20ms, contact support because something is awry.</p>
+
+<p>In order to keep this endpoint fast, we don&rsquo;t do any validation on the data you send us.
+You could send along a non-existant Template slug or you could have a typo in your JSON
+config, but the ShortURL endpoint would still return a 201 status code and a
+ShortURL regardless. Keep this is mind and be sure to test your ShortURLs before deploying them into
+production.</p>
+
+<p>For details on how to create a ShortURL, see the <a href="#shorturl-reference">ShortURL Reference</a> below.</p>
+<h2 id='secondary-method-signed-urls'>Secondary Method: Signed URLs</h2>
+<blockquote>
+<p>An example Signed URL</p>
+</blockquote>
+<pre class="highlight plaintext">https://charturl.com/i/9yi1/area-spline?d=%7B%22options%22%3A%7B%22data%22%3A%7B%22columns%22%3A%5B%5B%22Revenue+in+%24%22%2C300%2C350%2C300%2C0%2C0%2C0%5D%2C%5B%22Customers%22%2C130%2C100%2C140%2C200%2C150%2C50%5D%5D%7D%7D%7D&amp;s=cw7R0Nlj2VB1kYvdLF1A9h%2BICpAQ0PThzWdUE4OPohg%3D%0A
+</pre>
+
+<p>Signed URLs let you construct a URL on the fly that will instantly be turned
+into an image when used in an img tag. This method limits the amount of data
+you can send, since URLs have a max length, but here is an example URL:</p>
+
+<p>Signed URLs are helpful when you can&rsquo;t afford to wait for the network latency
+of making a call to our ShortURL endpoint.</p>
+
+<p>For details on how to create a Signed URL,
+see the <a href="#signed-url-reference">Signed URL Reference</a> below.</p>
+
+          <h1 id='image-details'>Image Details</h1><h3 id='image-formats'>Image Formats</h3>
+<p>Images are returned as PNG files. Support for TIFF is coming soon.</p>
 <h3 id='image-sizes'>Image Sizes</h3>
-<p>Image heights and widths should not be less than 40px. The max height and width is 1200px.</p>
+<p>Image heights and widths should not be less than 40px. The max height and width
+is 1200px. To specify height &amp; width, look at the documentation for the
+charting library you are using.</p>
 <h3 id='retina-image-support'>Retina Image Support</h3>
-<p>We now support modifying the pixel ratio by setting the <code class="prettyprint">charturl.pixel_ratio</code> in your Config JS Object.</p>
+<p>We now support modifying the pixel ratio in two ways. First, you can set the
+<code class="prettyprint">charturl.pixel_ratio</code> in your Config JS Object. See the <a href="#config-javascript-reference">Config JavaScript
+Reference</a> below for more information. Second,
+you can add the <code class="prettyprint">retina=1</code> parameter to any URL (Signed or Short) and a
+retina-scale image will be returned.</p>
 
-<p>For ease of use in stylesheets and the srcset attribute, you can also append <code class="prettyprint">retina=1</code> onto any URL and it will have the same effect as setting the <code class="prettyprint">charturl.pixel_ratio</code> option.</p>
+<p>For ease of use in stylesheets and the srcset attribute, you can also append
+retina=1 onto any URL and it will have the same effect as setting the
+charturl.pixel_ratio option.</p>
+<h3 id='using-code-classprettyprintsrcsetcode'>Using <code class="prettyprint">srcset</code></h3>
+<p>The <code class="prettyprint">srcset</code> attribute is a handy way to provide retina resolution options to
+browsers without making them download both versions of the image. Below is an
+example of how to use <code class="prettyprint">srcset</code></p>
 
-          <h1 id='short-urls'>Short URLs</h1><h2 id='what-are-short-urls'>What are Short URLs?</h2><h3 id='how-to-use'>How to Use</h3>
-<p>Short URLs are for when you have too much data to fit into the 2,000 character limit of a GET string. You POST the data to us, and we&rsquo;ll return a Short URL for you to use.</p>
-<h3 id='they39re-free'>They&rsquo;re Free</h3>
-<p>You do not get charged for an &ldquo;image&rdquo; when creating a Short URL.</p>
-<h3 id='they39re-fast'>They&rsquo;re Fast</h3>
-<p>Since we don&rsquo;t render the image until the resulting Short URL is used within an <code class="prettyprint">img</code> tag, so this endpoint is very speedy. If you&rsquo;re seeing response times over 20ms, contact <a href="mailto:support@charturl.com">support</a> because something is awry.</p>
-<h3 id='example'>Example</h3>
-<p>Below is a heavily documented Ruby example of creating a Short URL</p>
-<pre class="highlight ruby"><span class="cm">=begin
-Creating your first Short URL
-This heavily commented Ruby example will walk you through
-creating your first Short URL for ChartURL
-First, you're going to need to get some things from your account
-`api_key`
-This is found under the Project. We provide two API keys: one
-for your production environment and one for development. The
-development key will always return images that are watermarked
-with an ugly "CHARTURL PREVIEW", but you'll never be charged
-for those images (either overage fees or credits against your plan).
-For this example, we'll use "dak-55045dac-bb35-40ac-80c8-874ab71c6f83"
-for an `api_key`, which is a real development key we use for
-these examples.
-`template_slug`
-Templates hold all the config options you want your chart to have.
-When creating a Short URL, you can reference a `template_slug`, and
-just pass in the data that you want rendered in that template.
-When you pass in the data for the chart, you can optionally pass in
-options that can augment or override the settings store in your template.
-We've created several templates for you including:
-* "quick-pie": A simple pie chart
-* "weekly-activity": A bar chart with X-axis labels of "M" through "Su"
-* "timeseries": A line chart that can accept timestamped data
-For this example, we'll use "weekly-activity" for `template_slug`
-=end</span>
+<p><code class="prettyprint">&lt;img src=&quot;[url]&quot; srcset=&quot;[url],1x [url]?retina=1 2x&quot;&gt;</code></p>
 
-<span class="c1"># We need to convert stuff to JSON. In Ruby 2.1.2, 'json' is part of</span>
-<span class="c1"># the standard library. You may need to install a rubygem for earlier</span>
-<span class="c1"># versions of Ruby</span>
+<p>Using <code class="prettyprint">srcset</code> and our <code class="prettyprint">retina=1</code> option will greatly increase the quality of
+your ChartURL images on retina screens. For more information about <code class="prettyprint">srcset</code>
+<a href="https://css-tricks.com/srcset-chrome/">check out this article at CSS-TRICKS</a>.</p>
+<h3 id='asset-storage'>Asset Storage</h3>
+<p>We store all images on S3.</p>
+<h3 id='loading-speed'>Loading Speed</h3>
+<p>Size of the image and network speeds will obviously have an impact, but an
+800x400 PNG will render on our end in around 400ms.</p>
+<h3 id='charturl-watermark-branding'>ChartURL Watermark Branding</h3>
+<p>The ChartURL watermark branding on images is removed once you choose any paid
+plan.</p>
+<h3 id='custom-watermark-branding'>Custom Watermark Branding</h3><pre class="highlight css"><span class="nt">body</span><span class="nd">:before</span> <span class="p">{</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="s1">" "</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">bottom</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">20</span><span class="err">%</span><span class="p">;</span> 
+  <span class="nl">width</span><span class="p">:</span> <span class="m">40</span><span class="err">%</span><span class="p">;</span>
+  <span class="nl">z-index</span><span class="p">:</span> <span class="m">-1</span><span class="p">;</span>
+  <span class="nl">opacity</span><span class="p">:</span> <span class="m">0.2</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="sx">url(/* DATA URI */)</span><span class="p">;</span>
+  <span class="nl">background-size</span><span class="p">:</span> <span class="n">contain</span><span class="p">;</span>
+  <span class="nl">background-position</span><span class="p">:</span> <span class="nb">bottom</span> <span class="nb">right</span><span class="p">;</span>
+  <span class="nl">max-height</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+<p>We support custom watermark branding using CSS and an image data URI. See the
+example CSS on the right. We recommend setting <code class="prettyprint">max-width</code> and <code class="prettyprint">max-height</code> to
+the size the image to avoid it looking blurry on larger images. Your logo
+should be a PNG with a transparent background. To turn your image into a data
+URI, use a service <a href="http://dopiaza.org/tools/datauri/index.php">like this one</a>.</p>
+
+<p>Technically, you could use an external URL (to an asset on S3 for example) in
+place of the <code class="prettyprint">background-url</code>, but <strong>do not do that</strong>.  We cannot guarantee the
+images will load correctly at scale.</p>
+<h3 id='caching-image-urls'>Caching image URLs</h3>
+<p>You&rsquo;ll notice that the URLs you generate redirect to S3 urls. Do not store these S3 URLs, as
+we do not guarantee they will not change over time.</p>
+
+          <h1 id='reference'>Reference</h1><h2 id='shorturl-reference'>ShortURL Reference</h2>
+<blockquote>
+<p>Below is a full example of what you can pass into the ShortURL endpoint</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weekly-activity"</span><span class="p">,</span><span class="w">
+
+  </span><span class="s2">"charturl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"pixel_ratio"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My great title!"</span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"data 1"</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"data 2"</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="s2">"custom_css"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body {background-color: black}"</span><span class="p">,</span><span class="w">
+
+  </span><span class="s2">"custom_js"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/* Some JS */"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Code examples for generating ShortURLs</p>
+</blockquote>
+<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'typhoeus'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
-<span class="c1"># We need to make an HTTP request. We're not big fans of Net::HTTP</span>
-<span class="c1"># (the standard library that comes with Ruby) so we've already</span>
-<span class="c1"># installed the Typhoeus Gem https://github.com/typhoeus/typhoeus</span>
-<span class="nb">require</span> <span class="s1">'typhoeus'</span>
-
-<span class="c1"># Set our API Key. You'll probably want to set this conditionally</span>
-<span class="c1"># based on environment so that you use your development keys and</span>
-<span class="c1"># not get charged while in non-production (dev/test/staging/qa)</span>
-<span class="no">API_KEY</span> <span class="o">=</span> <span class="s2">"dak-55045dac-bb35-40ac-80c8-874ab71c6f83"</span>
-
-<span class="c1"># We'll define a helper method to generate the URLs. It'll take</span>
-<span class="c1"># two arguments: `template_slug` (which will be "weekly-activity")</span>
-<span class="c1"># and `options` (which will be our data)</span>
-<span class="k">def</span> <span class="nf">charturl_url</span><span class="p">(</span><span class="n">template_slug</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-
-  <span class="c1"># The endpoint for creating a ShortURL is:</span>
-  <span class="c1">#   "https://charturo.com/short-urls.json"</span>
-  <span class="c1">#</span>
-  <span class="c1"># You need to add the `api_key` query string parameter to</span>
-  <span class="c1"># identify and authenticate yourself</span>
-  <span class="c1">#</span>
-  <span class="c1"># ALWAYS USE "HTTPS". If you don't, you will get a 302</span>
-  <span class="c1"># redirect response from our endpoint, and you will have</span>
-  <span class="c1"># exposed your API key to the outside world.</span>
-  <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://charturl.com/short-urls.json?api_key=</span><span class="si">#{</span><span class="no">API_KEY</span><span class="si">}</span><span class="s2">"</span>
-
-  <span class="c1"># You need to pass along the 'application/json' header or else</span>
-  <span class="c1"># our API will return a 400 Bad Request response.</span>
-  <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://charturl.com/short-urls.json?api_key=[REDACT]"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">template: </span><span class="s2">"weekly-activity"</span><span class="p">,</span>
+  <span class="ss">options: </span><span class="p">{</span>
+    <span class="ss">data: </span><span class="p">{</span>
+      <span class="s2">"columns"</span><span class="p">:</span> <span class="o">[</span>
+        <span class="o">[</span><span class="s2">"data 1"</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">]</span><span class="p">,</span>
+        <span class="o">[</span><span class="s2">"data 2"</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="o">]</span>
+      <span class="o">]</span> 
+    <span class="p">}</span>
   <span class="p">}</span>
+<span class="p">}</span>
 
-  <span class="c1"># The body of our post will contain the `template_slug` and our</span>
-  <span class="c1"># options. We'll generate a Ruby hash, convert it to JSON,</span>
-  <span class="c1"># and use that string as our body.</span>
-  <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="ss">template: </span><span class="n">template_slug</span><span class="p">,</span>
-    <span class="ss">options: </span><span class="n">options</span>
-  <span class="p">}.</span><span class="nf">to_json</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">headers: </span><span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">},</span>
+  <span class="ss">body: </span><span class="n">data</span><span class="p">.</span><span class="nf">to_json</span>
+<span class="p">}</span>
 
-  <span class="c1"># Make the request to create a ShortURL</span>
-  <span class="n">surl_response</span> <span class="o">=</span> <span class="no">Typhoeus</span><span class="o">::</span><span class="no">Request</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="ss">body: </span><span class="n">body</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span><span class="p">)</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="no">Typhoeus</span><span class="o">::</span><span class="no">Request</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 
-  <span class="c1"># Always check for errors</span>
-  <span class="k">if</span> <span class="o">!</span><span class="n">surl_response</span><span class="p">.</span><span class="nf">success?</span>
-    <span class="k">raise</span><span class="p">(</span><span class="s2">"Error creating ShortURL: </span><span class="si">#{</span><span class="n">surl_response</span><span class="p">.</span><span class="nf">inspect</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-  <span class="k">end</span>
+<span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span><span class="o">[</span><span class="s1">'short_url'</span><span class="o">]</span>  <span class="c1">#=&gt; "https://charturl.com/r/23425"</span>
+</pre>
+<pre class="highlight javascript"><span class="kr">const</span> <span class="nx">https</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'https'</span><span class="p">);</span>
 
-  <span class="c1"># response.body will look like this: '{"short_url": "https://charturl.com/r/38ag"}'</span>
-  <span class="c1"># Parse the JSON</span>
-  <span class="n">parsed_body</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">surl_response</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">template</span><span class="p">:</span> <span class="s1">'weekly-activity'</span><span class="p">,</span>
+  <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">columns</span><span class="p">:</span> <span class="p">[[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"2016-01-10"</span><span class="p">,</span> <span class="s2">"2016-01-11"</span><span class="p">,</span> <span class="s2">"2016-01-12"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Steps"</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-  <span class="c1"># parsed_body is now a Ruby Hash object</span>
-  <span class="c1"># Return the URL</span>
-  <span class="k">return</span> <span class="n">parsed_body</span><span class="o">[</span><span class="s1">'short_url'</span><span class="o">]</span>
-<span class="k">end</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">hostname</span><span class="p">:</span> <span class="s1">'charturl.com'</span><span class="p">,</span>
+  <span class="na">port</span><span class="p">:</span> <span class="mi">443</span><span class="p">,</span>
+  <span class="na">path</span><span class="p">:</span> <span class="s1">'/short-urls.json?api_key=[REDACTED]'</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Content-Length"</span><span class="p">:</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="c1"># Call our helper</span>
-<span class="n">url</span> <span class="o">=</span> <span class="n">charturl_url</span><span class="p">(</span><span class="s2">"weekly-activity"</span><span class="p">,</span> <span class="ss">data: </span><span class="p">{</span><span class="ss">columns: </span><span class="o">[[</span><span class="s2">"This week"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">"Last week"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="o">]]</span><span class="p">})</span>
-<span class="n">url</span> <span class="c1">#=&gt; "https://charturl.com/r/J9lA"</span>
+<span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">https</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'statusCode: '</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'headers: '</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
 
-<span class="c1"># Use the URL in an HTML5 image tag</span>
-<span class="c1">#</span>
-<span class="c1">#   &lt;img src="https://charturl.com/r/J9lA"&gt;</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">req</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+
+<span class="nx">req</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+<span class="p">});</span>
+
+</pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"dak-55045dac-bb35-40ac-80c8-874ab71c6f83"</span><span class="p">;</span>
+<span class="nv">$url</span> <span class="o">=</span> <span class="s1">'https://charturl.com/short-urls.json?api_key='</span> <span class="o">.</span> <span class="nv">$api_key</span><span class="p">;</span>
+
+<span class="c1"># Use `json_encode` to encode your own object into JSON
+</span><span class="nv">$content</span> <span class="o">=</span> <span class="s1">'{"template": "weekly-activity", "options":{"data":{"columns":[["This Week",10,12,41,9,14,15,15],["Last Week",9,14,21,21,20,3,5]]}}}'</span><span class="p">;</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span><span class="s2">"Content-type: application/json"</span><span class="p">));</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+
+<span class="nv">$json_response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">);</span>
+
+<span class="nv">$status</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="nv">$status</span> <span class="o">!=</span> <span class="mi">201</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">die</span><span class="p">(</span><span class="s2">"Error: call to URL </span><span class="nv">$url</span><span class="s2"> failed with status </span><span class="nv">$status</span><span class="s2">, response </span><span class="nv">$json_response</span><span class="s2">, curl_error "</span> <span class="o">.</span> <span class="nb">curl_error</span><span class="p">(</span><span class="nv">$curl</span><span class="p">)</span> <span class="o">.</span> <span class="s2">", curl_errno "</span> <span class="o">.</span> <span class="nb">curl_errno</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$curl</span><span class="p">);</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$json_response</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
+<span class="cp">?&gt;</span>
+
+
 </pre>
 
-          <h1 id='signed-urls'>Signed URLs</h1><h2 id='what-are-signed-urls'>What are signed URLs?</h2>
-<p>Signed URLs let you construct a URL on the fly that will instantly be turned into an image when used in an <code class="prettyprint">img</code> tag.</p>
-<h3 id='why-signed'>Why Signed?</h3>
-<p>It helps to ensure that someone else isn&rsquo;t using your account and running up your bill.</p>
-<h3 id='pros-to-signed-urls'>Pros to Signed URLs</h3>
-<p>It&rsquo;s quick. You generate a URL on your server, and then use it in an img tag.</p>
-<h3 id='cons-to-using-signed-urls'>Cons to using Signed URLs</h3>
-<p>URLs can only be ~2,000 characters. Furthermore, when sending HTML emails, some services will proxy images, making the URLs even longer. This is a problem that manifests inside the browser or e-mail client, so there&rsquo;s no way for you to even know that your user is seeing a broken image.</p>
-<h2 id='generating-the-url'>Generating the URL</h2>
-<p>The steps are simple:
-- Convert your options to JSON.
-- Generate an HMAC-SHA256 digest using your &ldquo;Encrypt Key.&rdquo;
-- Base64 encode the digest to generate the signature.
-- Encode the data into the URL structure shown below in the Ruby example.</p>
+<p>This endpoint takes an API key, some data, and creates a ShortURL.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://charturl.com/short-urls.json</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">api_key</code></td>
+<td>Your API key for the project your template belongs to</td>
+</tr>
+</tbody></table>
+<h3 id='headers'>Headers</h3>
+<table><thead>
+<tr>
+<th>Header</th>
+<th>Values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">Content-Type</code></td>
+<td><code class="prettyprint">application/json</code></td>
+</tr>
+</tbody></table>
+<h3 id='body'>Body</h3>
+<p>The POST body is JSON with the following attributes. To the right is an example dataset.</p>
 
-<p>Below is an example in Ruby. You can find examples of calculating an HMAC-SHA256 signature in other languages here: HMAC-SHA256 in Other Languages</p>
-<pre class="highlight ruby"><span class="c1"># This is a working example.</span>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>charturl</td>
+<td>No</td>
+<td>Object</td>
+<td>ChartURL specific options</td>
+</tr>
+<tr>
+<td>charturl.type</td>
+<td>No</td>
+<td>String</td>
+<td>Possible values: <code class="prettyprint">chartjs</code>, <code class="prettyprint">datamaps</code>, <code class="prettyprint">c3js</code>. Default: <code class="prettyprint">c3js</code></td>
+</tr>
+<tr>
+<td>charturl.pixel_ratio</td>
+<td>Integer</td>
+<td>Possible values: <code class="prettyprint">1</code>, <code class="prettyprint">2</code>. Default: <code class="prettyprint">2</code></td>
+<td></td>
+</tr>
+<tr>
+<td>charturl.title</td>
+<td>Object</td>
+<td>Add a title</td>
+<td></td>
+</tr>
+<tr>
+<td>charturl.title.text</td>
+<td>String</td>
+<td>The title text. Default: <code class="prettyprint">(none)</code></td>
+<td></td>
+</tr>
+<tr>
+<td>template</td>
+<td>Yes</td>
+<td>String</td>
+<td>The slug of a template to apply these data to</td>
+</tr>
+<tr>
+<td>options</td>
+<td>No</td>
+<td>Object</td>
+<td>This is the object passed to the charting library after merged with the Project- and Template-level ConfigJS settings</td>
+</tr>
+<tr>
+<td>custom_css</td>
+<td>No</td>
+<td>String</td>
+<td>CSS to be rendered into the page before storing the image</td>
+</tr>
+<tr>
+<td>custom_js</td>
+<td>No</td>
+<td>String</td>
+<td>JavaScript to be executed after the chart loads and before storing the image</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<blockquote>
+<p>Below is an example JSON response from the ShortURL endpoint</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"short_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://charturl.com/r/23425"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>Responses from the ShortURL endpoint are always JSON.</p>
+<h2 id='signed-url-reference'>Signed URL Reference</h2>
+<blockquote>
+<p>Code examples for generating signed URLs</p>
+</blockquote>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="c1"># The constants needed
+</span><span class="nv">$key</span> <span class="o">=</span> <span class="s2">"dek-d7a46236eda961a6c3c18ffcc6b077ba87d27e9ae85f7842c6d427c265dd5f69d5131308d93332353d4a55a4b1160fcf516515a4a9f0aa50fbf2d7a2e7d0f1c5"</span><span class="p">;</span>
+<span class="nv">$token</span> <span class="o">=</span> <span class="s2">"dt-RwYN"</span><span class="p">;</span>
+<span class="nv">$slug</span> <span class="o">=</span> <span class="s2">"weekly-activity"</span><span class="p">;</span>
+
+<span class="c1"># The data converted to JSON
+</span><span class="nv">$json</span> <span class="o">=</span> <span class="s1">'{"options":{"data":{"columns":[["This Week",10,12,41,9,14,15,15],["Last Week",9,14,21,21,20,3,5]]}}}'</span><span class="p">;</span>
+
+<span class="c1"># Generating the signature: http://www.jokecamp.com/blog/examples-of-creating-base64-hashes-using-hmac-sha256-in-different-languages/#php
+</span><span class="nv">$raw_sig</span> <span class="o">=</span> <span class="nb">hash_hmac</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">,</span> <span class="nv">$json</span><span class="p">,</span> <span class="nv">$key</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nv">$encoded_sig</span> <span class="o">=</span> <span class="nb">base64_encode</span><span class="p">(</span><span class="nv">$raw_sig</span><span class="p">);</span>
+<span class="nv">$url</span> <span class="o">=</span> <span class="s2">"https://charturl.com/i/"</span> <span class="o">.</span> <span class="nv">$token</span> <span class="o">.</span> <span class="s2">"/"</span> <span class="o">.</span> <span class="nv">$slug</span> <span class="o">.</span> <span class="s2">"?d="</span> <span class="o">.</span> <span class="nb">urlencode</span><span class="p">(</span><span class="nv">$json</span><span class="p">)</span> <span class="o">.</span> <span class="s2">"&amp;s="</span> <span class="o">.</span> <span class="nb">urlencode</span><span class="p">(</span><span class="nv">$encoded_sig</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="s1">'&lt;img src="'</span> <span class="o">.</span> <span class="nv">$url</span> <span class="o">.</span> <span class="s1">'"&gt;'</span><span class="p">;</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight ruby">
 <span class="nb">require</span> <span class="s1">'json'</span>
+<span class="nb">require</span> <span class="s1">'typhoeus'</span>
 <span class="nb">require</span> <span class="s1">'openssl'</span>
 <span class="nb">require</span> <span class="s1">'base64'</span>
 <span class="nb">require</span> <span class="s1">'cgi'</span>
 
-<span class="no">ENCRYPT_KEY</span> <span class="o">=</span> <span class="s2">"dek-d7a46236eda961a6c3c18ffcc6b077ba87d27e9ae85f7842c6d427c265dd5f69d5131308d93332353d4a55a4b1160fcf516515a4a9f0aa50fbf2d7a2e7d0f1c5"</span>
-<span class="no">PROJECT_TOKEN</span> <span class="o">=</span> <span class="s2">"dt-RwYN"</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">"dek-d7a46236eda961a6c3c18ffcc6b077ba87d27e9ae85f7842c6d427c265dd5f69d5131308d93332353d4a55a4b1160fcf516515a4a9f0aa50fbf2d7a2e7d0f1c5"</span><span class="p">;</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s2">"dt-RwYN"</span><span class="p">;</span>
+<span class="n">slug</span> <span class="o">=</span> <span class="s2">"weekly-activity"</span><span class="p">;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">options: </span><span class="p">{</span><span class="ss">data: </span><span class="p">{</span><span class="ss">columns: </span><span class="o">[[</span><span class="s2">"This Week"</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="s2">"Last Week"</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="o">]]</span><span class="p">}}};</span>
+<span class="n">json</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">to_json</span>
 
-<span class="k">def</span> <span class="nf">charturl_url</span><span class="p">(</span><span class="n">template_slug</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-  <span class="n">json</span> <span class="o">=</span> <span class="n">options</span><span class="p">.</span><span class="nf">to_json</span>
-  <span class="n">sig</span> <span class="o">=</span> <span class="no">Base64</span><span class="p">.</span><span class="nf">encode64</span><span class="p">(</span><span class="no">OpenSSL</span><span class="o">::</span><span class="no">HMAC</span><span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">,</span> <span class="no">ENCRYPT_KEY</span><span class="p">,</span> <span class="n">json</span><span class="p">))</span>
+<span class="c1"># Generating the signature: http://www.jokecamp.com/blog/examples-of-creating-base64-hashes-using-hmac-sha256-in-different-languages/#php</span>
+<span class="n">sig</span> <span class="o">=</span> <span class="no">Base64</span><span class="p">.</span><span class="nf">encode64</span><span class="p">(</span><span class="no">OpenSSL</span><span class="o">::</span><span class="no">HMAC</span><span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">json</span><span class="p">))</span>  
 
-  <span class="s2">"https://charturl.com/i/</span><span class="si">#{</span><span class="no">PROJECT_TOKEN</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">template_slug</span><span class="si">}</span><span class="s2">?d=</span><span class="si">#{</span><span class="no">CGI</span><span class="p">.</span><span class="nf">escape</span> <span class="n">json</span><span class="si">}</span><span class="s2">&amp;s=</span><span class="si">#{</span><span class="no">CGI</span><span class="p">.</span><span class="nf">escape</span> <span class="n">sig</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
 
-<span class="c1"># Call our helper</span>
-<span class="n">url</span> <span class="o">=</span> <span class="n">charturl_url</span><span class="p">(</span><span class="s2">"weekly-activity"</span><span class="p">,</span>
-    <span class="p">{</span><span class="ss">options: </span><span class="p">{</span><span class="ss">data: </span><span class="p">{</span><span class="ss">columns: </span><span class="o">[[</span><span class="s2">"This Week"</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">"Last Week"</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="o">]]</span><span class="p">}}})</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://charturl.com/</span><span class="si">#{</span><span class="n">token</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">slug</span><span class="si">}</span><span class="s2">?d=</span><span class="si">#{</span><span class="no">CGI</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="n">json</span><span class="p">)</span><span class="si">}</span><span class="s2">&amp;s=</span><span class="si">#{</span><span class="no">CGI</span><span class="p">.</span><span class="nf">escape</span> <span class="n">sig</span><span class="si">}</span><span class="s2">"</span>
+</pre>
+<pre class="highlight javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">KILL</span><span class="p">.</span><span class="nx">ME</span>
 </pre>
 
-          <h1 id='deprecated-encrypted-urls'>(Deprecated) Encrypted URLs</h1>
-<p>This method is deprecated. If you&rsquo;re already using this method, feel free to keep using it, but new users should not user it. It works just fine, but the <a href="/#signed-urls">Signed URL</a> method is easier to implement and just as secure.</p>
-<h2 id='how-to-use-encrypted-urls'>How to Use Encrypted URLs</h2>
-<p>Encrypted URLs let you construct a URL on the fly that will instantly be turned into an image when used in an <code class="prettyprint">img</code> tag.</p>
-<h3 id='why-encrypted'>Why Encrypted?</h3>
-<p>Encryption is the only way we can guarantee someone else isn&rsquo;t using your account and running up your bill.</p>
-<h3 id='pros-to-encrypted-urls'>Pros to Encrypted URLs</h3>
-<p>It&rsquo;s quick. You generate a URL on your server, and then use it in an <code class="prettyprint">img</code> tag.</p>
-<h3 id='cons-to-using-encrypted-urls'>Cons to using Encrypted URLs</h3>
-<p>URLs can only be ~2,000 characters. Furthermore, when sending HTML emails, some services will proxy images, making the URLs even longer. This is a problem that manifests inside the browser or e-mail client, so there&rsquo;s no way for you to even know that your user is seeing a broken image.</p>
-<h2 id='generating-the-url'>Generating the URL</h2><pre class="highlight ruby"><span class="cm">=begin
-Creating your first Encrypted URL
-This heavily commented Ruby example will walk you through
-creating your first Encrypted URL for ChartURL
-First, you're going to need to get some things from your account
-`encrypt_key`
-This is found under the Project. We provide two encrypt keys: one
-for your production environment and one for development. The
-development encrypt key will always return images that are watermarked
-with an ugly "CHARTURL PREVIEW", but you'll never be charged
-for those images (either overage fees or credits against your plan).
-For this example, we'll use
-"dek-d7a46236eda961a6c3c18ffcc6b077ba87d27e9ae85f7842c6d427c265dd5f69d5131308d93332353d4a55a4b1160fcf516515a4a9f0aa50fbf2d7a2e7d0f1c5"
-for an `encrypt_key`, which is a real development key we use for
-these examples.
-`token`
-This is also found under Project. We'll use "dt-RwYN" for our
-`token`.
-`template_slug`
-Templates hold all the config options you want your chart to have.
-When creating an Encrypted URL, you can reference a `template_slug`, and
-just pass in the data that you want rendered in that template.
-When you pass in the data for the chart, you can optionally pass in
-options that can augment or override the settings store in your template.
-We've created several templates for you including:
-* "quick-pie": A simple pie chart
-* "weekly-activity": A bar chart with X-axis labels of "M" through "Su"
-* "timeseries": A line chart that can accept timestamped data
-For this example, we'll use "weekly-activity" for `template_slug`
-=end</span>
+<p>This endpoint requires two parameters, the JSON data being passed in, and a Signature to ensure authenticity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://charturl.com/i/[:project_token]/[:template_slug]</code></p>
 
-<span class="c1"># We need to convert stuff to JSON. In Ruby 2.1.2, 'json' is part of</span>
-<span class="c1"># the standard library. You may need to install a rubygem for earlier</span>
-<span class="c1"># versions of Ruby</span>
-<span class="nb">require</span> <span class="s1">'json'</span>
+<p>The <code class="prettyprint">project_token</code> is taken from your Project. The <code class="prettyprint">template_slug</code> is for your template. Format defaults to PNG, which is currently the only option.</p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">d</code></td>
+<td>Yes</td>
+<td>The CGI-escaped JSON data for your chart</td>
+</tr>
+<tr>
+<td><code class="prettyprint">s</code></td>
+<td>Yes</td>
+<td>A CGI-escaped, Base64-encoded SHA-256 HMAC digest of your <code class="prettyprint">d</code> parameter and your <code class="prettyprint">ENCRYPT_KEY</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">retina</code></td>
+<td>No</td>
+<td>Include <code class="prettyprint">retina=1</code> on query string to return 2x resolution image. Do not include parameter on query string to return default image.</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<p>The response will be an image of the desired format.</p>
 
+          <h2 id='bulk-api-reference'>Bulk API Reference</h2>
+<blockquote>
+<p>Below is an example JSON body to include in the Bulk API POST</p>
+</blockquote>
+<pre class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quick-pie"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charturl"</span><span class="p">:{},</span><span class="w">
+    </span><span class="s2">"options"</span><span class="p">:{</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">[</span><span class="s2">"Yes"</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w">
+          </span><span class="p">[</span><span class="s2">"No"</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w">
+          </span><span class="p">[</span><span class="s2">"Unsure"</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">]</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">"weekly-activity"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charturl"</span><span class="p">:{},</span><span class="w">
+    </span><span class="s2">"options"</span><span class="p">:{</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">[</span><span class="s2">"Last Week"</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="w">
+          </span><span class="p">[</span><span class="s2">"This Week"</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></pre>
 
-<span class="c1"># We encrypt the data to prevent other people from using your account.</span>
-<span class="c1"># The cipher we use is AES-256-CBC, which is a very secure, standard</span>
-<span class="c1"># encryption cipher. There are libraries in most languages that will</span>
-<span class="c1"># do all the heavily lifting for you. Ruby comes with such a library,</span>
-<span class="c1"># OpenSSL::Cipher</span>
-<span class="nb">require</span> <span class="s1">'openssl'</span>
+<p>This endpoint, which is only available at higher pricing tiers,
+enables you to create up to 100 ShortURLs at once.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://charturl.com/short-urls/bulk.json</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">api_key</code></td>
+<td>Your API key for the project your template belongs to</td>
+</tr>
+</tbody></table>
+<h3 id='headers'>Headers</h3>
+<table><thead>
+<tr>
+<th>Header</th>
+<th>Values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">Content-Type</code></td>
+<td><code class="prettyprint">application/json</code></td>
+</tr>
+</tbody></table>
+<h3 id='body'>Body</h3>
+<p>The POST body is a JSON array of ShortURL objects. The ShortURL objects are the same as above,
+with one exception: the addition of an <code class="prettyprint">id</code> field. Each member of the array must have a unique
+<code class="prettyprint">id</code> field, so you can use the strings <code class="prettyprint">&quot;1&quot;</code> to <code class="prettyprint">&quot;100&quot;</code> for example.</p>
+<h3 id='response'>Response</h3>
+<blockquote>
+<p>Below is an example JSON response from the ShortURL endpoint</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"short_urls"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"short_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://charturl.com/r/23425"</span><span class="p">},</span><span class="w">
+    </span><span class="s2">"2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"short_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://charturl.com/r/a338h"</span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
+<p>Responses from the Bulk API  endpoint are always JSON.</p>
 
-<span class="c1"># We need to Base64 encode the encrypted data. Ruby comes with a</span>
-<span class="c1"># Base64 library</span>
-<span class="nb">require</span> <span class="s1">'base64'</span>
+          <h1 id='help-us-improve'>Help us improve</h1>
+<p>Help us improve these docs!</p>
 
+<p>If you have any questions, or if you have implemented logic to create
+Signed or Short URLs in a language other than Ruby, JavaScript, or
+PHP, we want to know!</p>
 
-<span class="c1"># To construct the final URL, we'll need to CGI escape some things</span>
-<span class="nb">require</span> <span class="s1">'cgi'</span>
-
-
-
-<span class="c1"># Set our Encrupt key &amp; Token. You'll probably want to set this conditionally</span>
-<span class="c1"># based on environment so that you use your development keys and</span>
-<span class="c1"># not get charged while in non-production (dev/test/staging/qa)</span>
-<span class="no">ENCRYPT_KEY</span> <span class="o">=</span> <span class="s2">"dek-d7a46236eda961a6c3c18ffcc6b077ba87d27e9ae85f7842c6d427c265dd5f69d5131308d93332353d4a55a4b1160fcf516515a4a9f0aa50fbf2d7a2e7d0f1c5"</span>
-<span class="no">ENCRYPT_KEY_DIGEST</span> <span class="o">=</span> <span class="no">KEY_DIGEST</span> <span class="o">=</span> <span class="no">OpenSSL</span><span class="o">::</span><span class="no">Digest</span><span class="o">::</span><span class="no">SHA256</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">ENCRYPT_KEY</span><span class="p">).</span><span class="nf">digest</span>
-<span class="no">PROJECT_TOKEN</span> <span class="o">=</span> <span class="s2">"dt-RwYN"</span>
-
-<span class="c1"># We'll define a helper method to generate the URLs. It'll take</span>
-<span class="c1"># two arguments: `template_slug` (which will be "weekly-activity")</span>
-<span class="c1"># and `options` (which will be our data)</span>
-<span class="k">def</span> <span class="nf">charturl_url</span><span class="p">(</span><span class="n">template_slug</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-
-  <span class="c1"># The JSON should have the following structure:</span>
-  <span class="c1"># {</span>
-  <span class="c1">#   "options": {</span>
-  <span class="c1">#     # C3.js options. See http://c3js.org</span>
-  <span class="c1">#   }</span>
-  <span class="c1"># }</span>
-  <span class="n">json</span> <span class="o">=</span> <span class="p">{</span><span class="ss">options: </span><span class="n">data</span><span class="p">}.</span><span class="nf">to_json</span>
-
-
-  <span class="c1"># We use the AES-256-CBC cipher</span>
-  <span class="c1"># Make sure to generate a random IV each time</span>
-  <span class="n">cipher</span> <span class="o">=</span> <span class="no">OpenSSL</span><span class="o">::</span><span class="no">Cipher</span><span class="p">.</span><span class="nf">new</span> <span class="s1">'AES-256-CBC'</span>
-  <span class="n">cipher</span><span class="p">.</span><span class="nf">encrypt</span>
-  <span class="n">iv</span> <span class="o">=</span> <span class="n">cipher</span><span class="p">.</span><span class="nf">random_iv</span>
-  <span class="n">cipher</span><span class="p">.</span><span class="nf">key</span> <span class="o">=</span> <span class="no">ENCRYPT_KEY_DIGEST</span>
-  <span class="n">encrypted_json</span> <span class="o">=</span> <span class="n">cipher</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">json</span><span class="p">)</span> <span class="o">+</span> <span class="n">cipher</span><span class="p">.</span><span class="nf">final</span>
-
-  <span class="c1"># Since we're sending the IV and the data along in the URL,</span>
-  <span class="c1"># they both need to be Base64 encoded and then CGI escaped.</span>
-  <span class="c1"># Note that your IV might be a hex string, which doesn't need</span>
-  <span class="c1"># to be Base64 encoded. However, some libraries generate IVs</span>
-  <span class="c1"># that are not Base64-compatible, so to keep things consistent,</span>
-  <span class="c1"># we always Base64 _DECODE_ the IV on our end. Therefore, you</span>
-  <span class="c1"># need to Base64 ENCODE it or else you'll see "Decrypt Error"</span>
-  <span class="n">iv_for_url</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="no">Base64</span><span class="p">.</span><span class="nf">encode64</span><span class="p">(</span><span class="n">iv</span><span class="p">))</span>
-  <span class="n">data_for_url</span> <span class="o">=</span> <span class="no">CGI</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="no">Base64</span><span class="p">.</span><span class="nf">encode64</span><span class="p">(</span><span class="n">encrypted_json</span><span class="p">))</span>
-
-  <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://charturl.com/i/</span><span class="si">#{</span><span class="no">PROJECT_TOKEN</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">template_slug</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">iv_for_url</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">data_for_url</span><span class="si">}</span><span class="s2">"</span>
-
-  <span class="c1"># Check to see if URLs are too long</span>
-  <span class="k">if</span> <span class="n">url</span><span class="p">.</span><span class="nf">size</span> <span class="o">&gt;</span> <span class="mi">2083</span>
-    <span class="c1"># Instead of raising an exception, you could call another</span>
-    <span class="c1"># helper that generates a ShortURL</span>
-    <span class="k">raise</span> <span class="s2">"URL too long. Switch to ShortURL"</span>
-  <span class="k">end</span>
-
-
-  <span class="c1"># OPTIONALLY check this soft limit</span>
-  <span class="k">if</span> <span class="n">url</span><span class="p">.</span><span class="nf">size</span> <span class="o">&gt;</span> <span class="mi">1500</span>
-    <span class="k">raise</span> <span class="s2">"URL is getting too close to limit. Images may not render in mail clients"</span>
-  <span class="k">end</span>
-
-
-  <span class="c1"># Return URL</span>
-  <span class="k">return</span> <span class="n">url</span>
-<span class="k">end</span>
-
-<span class="c1"># Call our helper</span>
-<span class="n">url</span> <span class="o">=</span> <span class="n">charturl_url</span><span class="p">(</span><span class="s2">"weekly-activity"</span><span class="p">,</span>
-    <span class="ss">data: </span><span class="p">{</span><span class="ss">columns: </span><span class="o">[[</span><span class="s2">"This Week"</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s2">"Last Week"</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="o">]]</span><span class="p">})</span>
-<span class="n">url</span>
-
-<span class="c1"># ^ If you run this command multiple times, you'll get different URLs. This is</span>
-<span class="c1"># because of the IVs being random.</span>
-</pre>
-
-          <h1 id='bulk-api'>Bulk API</h1>
-<p>The Bulk API is just like the <a href="/#short_urls">Short URL</a> API, but instead of sending us data for one chart at a time, you can send up to 1,000.</p>
-
-<p>The request is sent via POST just like the <a href="/#short_urls">Short URL API</a>, and a JSON response returned.</p>
-<h2 id='requirements'>Requirements</h2>
-<p>The id must be a string, but it can be a number string like &ldquo;1&rdquo;.
-The id must be unique, but only within the scope of request, so you can use incrementing integers from &ldquo;1&rdquo; to &ldquo;100&rdquo; in all your requests.
-Beyond checking your API key and verifying that the string you passed is valid JSON, we don&rsquo;t do any validation, so be careful with what you send us.</p>
-
-<p>Want to use the Bulk API?
-Contact us by emailing <a href="mailto:support@charturl.com">support@charturl.com</a> if you would like access to the bulk API.</p>
-<pre class="highlight shell"><span class="c">#</span>
-<span class="c"># HTTP request body</span>
-<span class="c">#</span>
-
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"1"</span>,
-    <span class="s2">"template"</span>: <span class="s2">"quick-pie"</span>,
-    <span class="s2">"charturl"</span>:<span class="o">{}</span>,
-    <span class="s2">"options"</span>:<span class="o">{</span><span class="s2">"data"</span>: <span class="o">{</span><span class="s2">"columns"</span>: <span class="o">[[</span><span class="s2">"Yes"</span>, 2], <span class="o">[</span><span class="s2">"No"</span>, 3], <span class="o">[</span><span class="s2">"Unsure"</span>, 6]]<span class="o">}</span>, <span class="s2">"size"</span>: <span class="o">{</span><span class="s2">"width"</span>: 200<span class="o">}}</span>
-  <span class="o">}</span>,
-  <span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"2"</span>,
-    <span class="s2">"template"</span>: <span class="s2">"weekly-activity"</span>,
-    <span class="s2">"charturl"</span>:<span class="o">{}</span>,
-    <span class="s2">"options"</span>:<span class="o">{</span><span class="s2">"data"</span>: <span class="o">{</span><span class="s2">"columns"</span>: <span class="o">[[</span><span class="s2">"Last Week"</span>, 1,2,3,4,3,2,1], <span class="o">[</span><span class="s2">"This Week"</span>, 22,5,1,5,1,5,6]]<span class="o">}}</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-
-
-<span class="c">#</span>
-<span class="c"># HTTP response body</span>
-<span class="c">#</span>
-
-<span class="o">{</span>
-  <span class="s2">"short_urls"</span>: <span class="o">{</span>
-    <span class="s2">"1"</span>: <span class="s2">"https://charturl.com/r/R89H"</span>,
-    <span class="s2">"2"</span>: <span class="s2">"https://charturl.com/r/lNnu"</span>,
-  <span class="o">}</span>
-<span class="o">}</span>
-</pre>
-
-          <h1 id='credits'>Credits</h1>
-<p>ChartURL was built by the folks at <a href="https://ramen.is">Ramen</a></p>
-
-<p>Copyright Ramen, Inc. 2012 - 2016</p>
+<p><a href="mailto:support@charturl.com">Contact support</a> and let us know what
+you&rsquo;ve got.</p>
 
       </div>
       <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="php">php</a>
+          </div>
       </div>
     </div>
   </body>
