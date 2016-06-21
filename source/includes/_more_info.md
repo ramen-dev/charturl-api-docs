@@ -6,9 +6,29 @@ Images are returned as PNG files. Support for TIFF is coming soon.
 
 ### Image Sizes
 
+```json
+{
+  "charturl": {"type": "chartjs"},
+  "options": {
+    "size": {"height": 400, "width": 600},
+    "type": "bar",
+    "options": {
+        "title": {
+            "display": true,
+            "text": "Chart.js Combo Bar Line Chart"
+        }
+    }
+  }
+}
+```
+
 Image heights and widths should not be less than 40px. The max height and width
-is 1200px. To specify height & width, look at the documentation for the
-charting library you are using.
+is 1200px. Retina images will return up to 2400px. To specify height & width:
+
+- ChartJS: Set `options.size` to be an object with `height` and `width` integer
+parameters. This is not an option in the Chart.js documentation. Their docs require
+setting size via markup, so we've added it here.
+- C3.js & DataMaps: See the documentation for those charting libraries
 
 ### Retina Image Support
 
