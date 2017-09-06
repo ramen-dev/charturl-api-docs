@@ -98,6 +98,20 @@ Not sure where to start? [Try one of our examples](https://charturl.com/app/exam
 
 ## 3. Choosing a charting library
 
+> Setting ChartJS Version 
+
+```json
+{
+  "charturl": { "type": "charturl", "version": "2.3" },
+  "options": {
+    "data": {
+     "columns": [["Series 1", 1,2,3,4,5], ["Series 2",2,3,4,5,6]]
+    }
+  }
+}
+```
+
+
 To choose a charting library, you'll want to set the `charturl.type` option to the
 appropriate value. Below we list out our charting libraries, show you how to choose
 that library, and link to their documentation.
@@ -109,6 +123,11 @@ version 2.0.0. You can find
 the documentation for ChartJS here: [ChartJS 2.0 Documentation](https://chartjs.org)
 
 To use ChartJS, set `charturl.type` to `chartjs`.
+
+### Using ChartJS 2.3.0
+
+ChartJS 2.3.0 brought numerous upgrades and additional functionality. To use this version,
+simply set `charturl.version` to `2.3`. See the example to the right.
 
 ### DataMaps
 
