@@ -116,7 +116,7 @@ To choose a charting library, you'll want to set the `charturl.type` option to t
 appropriate value. Below we list out our charting libraries, show you how to choose
 that library, and link to their documentation.
 
-### ChartJS 2.0
+### ChartJS 2.x
 
 This is our recommended library for basic charts. We are currently running
 version 2.0.0. You can find
@@ -124,10 +124,17 @@ the documentation for ChartJS here: [ChartJS 2.0 Documentation](https://chartjs.
 
 To use ChartJS, set `charturl.type` to `chartjs`.
 
-### Using ChartJS 2.3.0
+### Using a different version of ChartJS
 
-ChartJS 2.3.0 brought numerous upgrades and additional functionality. To use this version,
-simply set `charturl.version` to `2.3`. See the example to the right.
+By default, charts are rendered using version 2.0. We also support the following versions:
+
+- 2.3
+- 2.4
+- 2.5
+- 2.6
+
+To use a version other than 2.0, set `charturl.version` to a string representing that version.
+See the example to the right.
 
 ### DataMaps
 
